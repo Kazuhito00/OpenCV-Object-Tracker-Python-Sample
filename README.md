@@ -4,7 +4,7 @@ Python版OpenCVのTracking APIのサンプルです。<br>
 <img src="https://user-images.githubusercontent.com/37477845/125820883-d1b08355-258f-4fcd-a59e-19dbd6fb4c2a.gif" loading="lazy" width="40%"> 
 
 # Requirement 
-* opencv-contrib-python 4.5.3.56 or later
+* opencv-contrib-python 4.5.3.56 or more and less than 4.7.0
 
 # Algorithm
 2021/07/16時点でOpenCVには以下9アルゴリズムが実装されています。
