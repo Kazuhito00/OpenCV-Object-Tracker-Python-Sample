@@ -25,6 +25,7 @@ def get_args():
     parser.add_argument('--use_mosse', action='store_true')
     parser.add_argument('--use_medianflow', action='store_true')
     parser.add_argument('--use_tld', action='store_true')
+    parser.add_argument('--use_nano', action='store_true')
 
     args = parser.parse_args()
 
@@ -55,6 +56,13 @@ def initialize_tracker_list(window_name, image, tracker_algorithm_list):
             params.kernel_r1 = "model/DaSiamRPN/dasiamrpn_kernel_r1.onnx"
             params.kernel_cls1 = "model/DaSiamRPN/dasiamrpn_kernel_cls1.onnx"
             tracker = cv.TrackerDaSiamRPN_create(params)
+        if tracker_algorithm == 'Nano':
+            params = cv.TrackerNano_Params()
+            params.backbone = "model/nanotrackv2/nanotrack_backbone_sim.onnx"
+            params.neckhead = "model/nanotrackv2/nanotrack_head_sim.onnx"
+            # params.backbone = "model/nanotrackv3/nanotrack_backbone_sim.onnx"
+            # params.neckhead = "model/nanotrackv3/nanotrack_head_sim.onnx"
+            tracker = cv.TrackerNano_create(params)
         if tracker_algorithm == 'CSRT':
             tracker = cv.TrackerCSRT_create()
         if tracker_algorithm == 'KCF':
@@ -116,6 +124,7 @@ def main():
     use_mosse = args.use_mosse
     use_medianflow = args.use_medianflow
     use_tld = args.use_tld
+    use_nano = args.use_nano
 
     # 使用アルゴリズム #########################################################
     tracker_algorithm_list = []
@@ -137,7 +146,9 @@ def main():
         tracker_algorithm_list.append('MedianFlow')
     if use_tld:
         tracker_algorithm_list.append('TLD')
-
+    if use_nano:
+        tracker_algorithm_list.append('Nano')
+        
     if len(tracker_algorithm_list) == 0:
         tracker_algorithm_list.append('DaSiamRPN')
     print(tracker_algorithm_list)
