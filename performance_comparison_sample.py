@@ -181,6 +181,11 @@ def main():
             # 追跡アップデート
             start_time = time.time()
             ok, bbox = tracker.update(image)
+            try:
+                tracker_score = tracker.getTrackingScore()
+            except:
+                tracker_score = '-'
+            
             elapsed_time_list.append(time.time() - start_time)
             if ok:
                 # 追跡後のバウンディングボックス描画
@@ -196,11 +201,18 @@ def main():
 
         # 各アルゴリズム処理時間描画
         for index, tracker_algorithm in enumerate(tracker_algorithm_list):
-            cv.putText(
-                debug_image, tracker_algorithm + " : " +
-                '{:.1f}'.format(elapsed_time_list[index] * 1000) + "ms",
-                (10, int(25 * (index + 1))), cv.FONT_HERSHEY_SIMPLEX, 0.7,
-                color_list[index], 2, cv.LINE_AA)
+            if tracker_score != '-':
+                cv.putText(
+                    debug_image, tracker_algorithm + " : " +
+                    '{:.1f}'.format(elapsed_time_list[index] * 1000) + "ms" + ' Score:{:.2f}'.format(tracker_score),
+                    (10, int(25 * (index + 1))), cv.FONT_HERSHEY_SIMPLEX, 0.7,
+                    color_list[index], 2, cv.LINE_AA)
+            else:
+                cv.putText(
+                    debug_image, tracker_algorithm + " : " +
+                    '{:.1f}'.format(elapsed_time_list[index] * 1000) + "ms",
+                    (10, int(25 * (index + 1))), cv.FONT_HERSHEY_SIMPLEX, 0.7,
+                    color_list[index], 2, cv.LINE_AA)
 
         cv.imshow(window_name, debug_image)
 
