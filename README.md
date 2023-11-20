@@ -87,9 +87,6 @@ MedianFlowトラッカーの使用有無<br>
 TLDトラッカーの使用有無<br>
 デフォルト：指定なし
 
-# ToDo
-- [ ] GOTURNトラッカーのモデル読み込みに失敗する問題の調査
-
 # Author
 高橋かずひと(https://twitter.com/KzhtTkhs)
  
