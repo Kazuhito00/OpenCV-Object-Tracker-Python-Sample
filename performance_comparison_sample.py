@@ -26,6 +26,7 @@ def get_args():
     parser.add_argument('--use_medianflow', action='store_true')
     parser.add_argument('--use_tld', action='store_true')
     parser.add_argument('--use_nano', action='store_true')
+    parser.add_argument('--use_vit', action='store_true')
 
     args = parser.parse_args()
 
@@ -63,6 +64,10 @@ def initialize_tracker_list(window_name, image, tracker_algorithm_list):
             # params.backbone = "model/nanotrackv3/nanotrack_backbone_sim.onnx"
             # params.neckhead = "model/nanotrackv3/nanotrack_head_sim.onnx"
             tracker = cv.TrackerNano_create(params)
+        if tracker_algorithm == 'Vit':
+            params = cv.TrackerVit_Params()
+            params.net = "model/vit/object_tracking_vittrack_2023sep.onnx"
+            tracker = cv.TrackerVit_create(params)
         if tracker_algorithm == 'CSRT':
             tracker = cv.TrackerCSRT_create()
         if tracker_algorithm == 'KCF':
@@ -125,6 +130,7 @@ def main():
     use_medianflow = args.use_medianflow
     use_tld = args.use_tld
     use_nano = args.use_nano
+    use_vit = args.use_vit
 
     # 使用アルゴリズム #########################################################
     tracker_algorithm_list = []
@@ -148,7 +154,9 @@ def main():
         tracker_algorithm_list.append('TLD')
     if use_nano:
         tracker_algorithm_list.append('Nano')
-        
+    if use_vit:
+        tracker_algorithm_list.append('Vit')
+
     if len(tracker_algorithm_list) == 0:
         tracker_algorithm_list.append('DaSiamRPN')
     print(tracker_algorithm_list)

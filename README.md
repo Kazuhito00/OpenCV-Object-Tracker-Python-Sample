@@ -7,9 +7,10 @@ Python版OpenCVのTracking APIのサンプルです。<br>
 * opencv-contrib-python 4.8.0.74 or later
 
 # Algorithm
-2023/07/25時点でOpenCVには以下10アルゴリズムが実装されています。
+2024/01/18時点でOpenCVには以下11アルゴリズムが実装されています。
 * DaSiamRPN
 * NanoTrack
+* Vit
 * MIL
 * GOTURN
 * CSRT
@@ -67,6 +68,9 @@ DaSiamRPNトラッカーの使用有無<br>
 デフォルト：指定なし
 * --use_nano<br>
 NanoTrackの使用有無<br>
+デフォルト：指定なし
+* --use_vit<br>
+Vitの使用有無<br>
 デフォルト：指定なし
 * --use_csrt<br>
 CSRTトラッカーの使用有無<br>
